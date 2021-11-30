@@ -1,18 +1,19 @@
 import React from 'react';
-import { Container, Typography, Box, Link } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+import { useDispatch, useSelector } from 'react-redux'
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
+
 import TextfieldWrapper from '../Textfield/Textfield'
+import Button from '../Button/Button';
+import { changeShowSignUpFlag, login, addUserData } from '../../../store/actions/formActions';
+
+import { Container, Typography, Box, Link } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { lightBlue } from '@mui/material/colors';
-import Button from '../Button/Button';
-import { useDispatch, useSelector } from 'react-redux'
-import { changeShowSignUpFlag, changeSignInFlag } from '../../../store/actions/actions';
-import CREDENTIAL from '../../../ constants/constants';
 
 const useStyles = makeStyles({
-	box: {
+    box: {
         padding: '20px',
         border: '2px solid',
         borderColor: lightBlue[800],
@@ -20,7 +21,7 @@ const useStyles = makeStyles({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-	},
+    },
     link: {
         color: lightBlue[800],
     },
@@ -35,26 +36,26 @@ const useStyles = makeStyles({
 });
 
 const INITIAL_FORM_STATE = {
-	email: '',
-	userName: '',
-	password: ''
+    email: '',
+    userName: '',
+    password: ''
 }
 
 const SIGN_IN_VALIDATION = Yup.object().shape({
-	userName: Yup.string()
-		.required('Required'),
-	password: Yup.string()
-		.required('No password provided.')
-		.min(7, 'Password is too short - should be 8 chars minimum.')
-		.matches(/[a-zA-Z]/, 'Password can only contain Latin letters.'),
+    userName: Yup.string()
+        .required('Required'),
+    password: Yup.string()
+        .required('No password provided.')
+        .min(7, 'Password is too short - should be 7 chars minimum.')
+        .matches(/[a-zA-Z]/, 'Password can only contain Latin letters.'),
 });
 
 const SIGN_UP_VALIDATION = SIGN_IN_VALIDATION.concat(
     Yup.object({
         email: Yup.string()
-		    .email('Invalid email')
-		    .required('Required'),
-     })
+            .email('Invalid email')
+            .required('Required'),
+    })
 )
 
 function CustomForm() {
@@ -62,35 +63,31 @@ function CustomForm() {
 
     const dispatcher = useDispatch();
     const showSignUp = useSelector((state) => state.formData.showSignUp);
-    const isSignIn = useSelector((state) => state.formData.isSignIn);
+    const loginFailed = useSelector((state) => state.formData.loginFailed);
+    const borderColor = loginFailed ? lightBlue[900] : lightBlue[500];    // COLOR
 
     const changeForm = () => {
-		dispatcher(changeShowSignUpFlag(!showSignUp));
-	}
+        dispatcher(changeShowSignUpFlag(!showSignUp));
+    }
 
-    const handleOnSubmit = ({ userName, password, email}) => {
-        if(showSignUp) {
-            localStorage.setItem('username', userName);
-            localStorage.setItem('password', password);
-            localStorage.setItem('email', email);
+    const handleOnSubmit = ({ userName, password, email }) => {
+        if (showSignUp) {
+            dispatcher(addUserData(userName, password, email))
             return;
         }
-        if(userName === CREDENTIAL.userName && password ===CREDENTIAL.password) {
-            dispatcher(changeSignInFlag(!isSignIn));
-            alert('you are logged in');
-        }
+        dispatcher(login(userName, password));
     }
 
     return (
         <Container maxWidth="xs" sx={{ mt: 10 }}>
             <Formik
                 initialValues={{ ...INITIAL_FORM_STATE }}
-                validationSchema={ showSignUp ? SIGN_UP_VALIDATION :  SIGN_IN_VALIDATION}
+                validationSchema={showSignUp ? SIGN_UP_VALIDATION : SIGN_IN_VALIDATION}
                 onSubmit={values => handleOnSubmit(values)}
             >
                 <Form>
                     <Box className={classes.box}>
-                        <AccountCircleIcon 
+                        <AccountCircleIcon
                             sx={{
                                 fontSize: 50,
                                 color: lightBlue[900]
@@ -101,16 +98,19 @@ function CustomForm() {
                         </Typography>
                         <TextfieldWrapper name="userName" label="User Name" />
                         <TextfieldWrapper name="password" label="Password" type="password" />
-                        {showSignUp &&  <TextfieldWrapper name="email" label="Email"/>}
+                        {showSignUp && <TextfieldWrapper name="email" label="Email" />}
                         <Button>Submit</Button>
                         <Link
-                            onClick={changeForm} 
-                            href='#' 
-                            variant='subtitle2' 
+                            onClick={changeForm}
+                            href='#'
+                            variant='subtitle2'
                             className={classes.link}
                         >
                             {showSignUp ? 'Already have an account? Sign in' : 'Create an Acount'}
                         </Link>
+                        <Typography variant='subtitle2' color='red'>
+                            {loginFailed ? 'Login failed' : ''}
+                        </Typography>
                     </Box>
                 </Form>
             </Formik>

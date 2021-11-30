@@ -3,7 +3,7 @@ import { useField } from 'formik';
 import React from 'react';
 
 
-const TextfieldWrapper = ({ name, ...otherProps }) => { 
+const TextfieldWrapper = ({ name, ...otherProps }) => {
 
     const [field, meta] = useField(name);
     const configTextField = {
@@ -11,7 +11,7 @@ const TextfieldWrapper = ({ name, ...otherProps }) => {
         ...otherProps,
         fullWidth: true,
         sx: {
-            m:2,
+            m: 2,
         }
     }
     if (meta && meta.touched && meta.error) {
@@ -19,8 +19,8 @@ const TextfieldWrapper = ({ name, ...otherProps }) => {
         configTextField.helperText = meta.error;
     }
     return (
-        <TextField {...configTextField}/>
+        <TextField {...configTextField} />
     )
 }
 
-export default TextfieldWrapper; 
+export default TextfieldWrapper;
