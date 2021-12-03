@@ -1,4 +1,11 @@
-import { BASE_URL, DISCOVER_URL, API_KEY, SEARCH_URL, GENRES_URL } from '../../ constants/constants';
+import {
+    BASE_URL,
+    DISCOVER_URL,
+    API_KEY,
+    SEARCH_URL,
+    GENRES_URL,
+    MOVIE_URL
+} from '../../ constants/constants';
 
 function fieldsToCamelCase(obj) {
     const mapped = {};
@@ -13,7 +20,7 @@ function fieldsToCamelCase(obj) {
     return mapped;
 }
 
-function loadFilms(endpoint, page, params, dispatch) {
+const loadFilms = (endpoint, page, params, dispatch) => {
     fetch(`${BASE_URL}${endpoint}api_key=${API_KEY}&page=${page}${params}`)
         .then(response => response.json())
         .then(data => ({
@@ -27,12 +34,28 @@ function loadFilms(endpoint, page, params, dispatch) {
             console.log(e)
         })
 }
-
-export const setFilms = (page) => (dispatch, getState) => {
-    loadFilms(DISCOVER_URL, page, ``, dispatch);
+export const loadFilmAC = (id) => (dispatch) => {
+    fetch(`${BASE_URL}${MOVIE_URL}${id}?api_key=${API_KEY}`)
+        .then(response => response.json())
+        .then(data => ({
+            backdropImage: data.backdrop_path,
+            image: data.poster_path,
+            genres: data.genres,
+            id: data.id,
+            language: data.original_language,
+            title: data.original_title,
+            overview: data.overview,
+            runtime: data.runtime,
+            releaseDate: data.release_date,
+            average: data.vote_average
+        }))
+        .then(data => dispatch({ type: 'SET_SELECTED_FILM', payload: data }))
+        .catch(e => {
+            console.log(e)
+        })
 }
 
-export const setFilmsByName = (name, page) => (dispatch, getState) => {
+export const setFilmsByName = (name, page) => (dispatch) => {
     loadFilms(SEARCH_URL, page, `&query=${name}`, dispatch);
 }
 
@@ -43,11 +66,13 @@ const filtersToQueryParams = (sort, genreIds, score) => {
         `&vote_average.lte=${score[1]}`
 }
 
-export const setFilmsByFilters = (sort, genreIds, score, page) => (dispatch) => {
+export const setFilms = (page, sort, genreIds, score) => (dispatch) => {
+    const target = sort || genreIds || score;
+    const params = target ? filtersToQueryParams(sort, genreIds, score) : '';
     loadFilms(
         DISCOVER_URL,
         page,
-        filtersToQueryParams(sort, genreIds, score),
+        params,
         dispatch
     );
 }
@@ -59,6 +84,20 @@ export const setGenres = () => (dispatch) => {
         .catch(e => {
             console.log(e)
         })
+}
+
+export const changePageAC = (page) => {
+    return {
+        type: 'CHANGE_PAGE',
+        payload: page
+    }
+}
+
+export const setSearchAC = (value) => {
+    return {
+        type: 'SET_SEARCH',
+        payload: value
+    }
 }
 
 

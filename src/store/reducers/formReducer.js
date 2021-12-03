@@ -6,7 +6,7 @@ const initialState = {
         password: 'test123',
         email: 'test@test.com'
     }],
-    currentUser: ''
+    currentUser: null
     
 }
 
@@ -27,6 +27,11 @@ export default function signUpReducer(state = initialState, action) {
                 loginFailed: !user,
                 currentUser: user
             };
+        case 'LOGOUT': 
+            return {
+                ...state,
+                currentUser: action.payload
+            }
             case 'ADD_USER_DATA':
                 return {
                     ...state,

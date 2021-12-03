@@ -8,10 +8,8 @@ const initialState = {
     filterOption: {
         genres: []
     },
-    filters: {
-        genres: [],
-        userScore: [0, 100]
-    }
+    search: '',
+    selectedFilm: {}
 }
 
 export default function filmsReducer(state = initialState, action) {
@@ -26,12 +24,30 @@ export default function filmsReducer(state = initialState, action) {
                     totalResults: action.payload.totalResults
                 }
             };
+        case 'SET_SELECTED_FILM': 
+            return {
+                ...state,
+                selectedFilm: action.payload
+            }
         case 'SET_GENRES':
             return {
                 ...state,
                 filterOption: {
                     genres: action.payload
                 }
+            }
+        case 'CHANGE_PAGE':
+            return {
+                ...state, 
+                pagination: {
+                    ...state.pagination,
+                    page: action.payload
+                }
+            }
+        case 'SET_SEARCH': 
+            return {
+                ...state,
+                search: action.payload
             }
         default:
             return state;

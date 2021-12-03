@@ -1,44 +1,54 @@
 import './App.css';
 import React from 'react';
 import FilmsPage from './components/FilmsPage/FilmsPage'
+import FilmDetails from './components/FilmDetails/FilmDetails'
 import Form from './components/FormsUI/Form/Form';
 import Header from './components/Header/Header';
 import { Provider } from 'react-redux'
 import store from './store/store.js';
-import {
-	BrowserRouter,
-	Routes,
-	Route,
-	Outlet
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useParams } from "react-router-dom";
 import FavouritesPage from './components/FavouritesPage/FavouritesPage';
 
+import { PrivateRoute } from './routing/PrivateRoute';
 
 function App() {
 	return (
-		<BrowserRouter>
-			<Provider store={store}>
+		<Provider store={store}>
+			<BrowserRouter>
 				<Routes>
+					<Route path="/" element={<Navigate to="/films" />} />
+						<Route
+							path="/films"
+							element={
+								<PrivateRoute>
+									<Header />
+									<FilmsPage />
+								</PrivateRoute>
+							}
+						/>
+						<Route
+							path="/films/:id"
+							element={
+								<PrivateRoute>
+									<Header />
+									<FilmDetails />
+								</PrivateRoute>
+							}
+						/>
+						<Route
+							path="/favourites"
+							element={
+								<PrivateRoute>
+									<Header />
+									<FavouritesPage />
+								</PrivateRoute>
+							}
+						/>
 					<Route path="/login" element={<Form />} />
-					<Route path="/" element={<RouteWrapper />}>
-						<Route path="" element={<FilmsPage />}/>
-						<Route path="favourites" element={<FavouritesPage />}/>
-					</Route>
 				</Routes>
-			</Provider>
-		</BrowserRouter>
+			</BrowserRouter>
+		</Provider>
 	);
 }
-
-
-function RouteWrapper(props) {
-	return (
-		<div>
-			<Header />
-			<Outlet />
-		</div>
-	);
-}
-
 
 export default App;

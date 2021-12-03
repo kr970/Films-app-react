@@ -13,6 +13,13 @@ export const login = (userName, password) => {
     }
 }
 
+export const logoutAC = () => {
+    return {
+        type: 'LOGOUT',
+        payload: null
+    }
+}
+
 export const addUserData = (userName, password, email) => {
     return {
         type: 'ADD_USER_DATA',

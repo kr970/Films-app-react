@@ -19,7 +19,7 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
     pointerEvents: 'none',
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
@@ -34,13 +34,19 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 const SearchWrapper = (props) => {
     return (
-        <Search onKeyUp={props.onKeyUp} sx={{ width: '90%' }}>
-            <SearchIconWrapper>
+        <Search 
+            onKeyUp={props.onKeyUp}
+            sx={{ width: '90%' }}
+        >
+            <SearchIconWrapper >
                 <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
                 placeholder="Search…"
                 inputProps={{ 'aria-label': 'search' }}
+                onFocus={props.onFocus}
+                onMouseOut={props.onMouseOut}
+                sx={{ width: '100%'}}
             />
         </Search>
     )

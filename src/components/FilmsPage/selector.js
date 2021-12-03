@@ -1,8 +1,20 @@
 export const filmsSelector = ({
     filmsData: {
         films,
-        pagination
+        pagination,
+        search
     }
 }) => ({
-    films, pagination
+    films,
+    pagination,
+    search
 });
+
+export const favouritesSelector = ({
+    favouritesData: {
+        favourites
+    }
+}) => ({
+    favourites
+});
+

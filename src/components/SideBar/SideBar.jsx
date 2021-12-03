@@ -32,7 +32,7 @@ const SideBar = () => {
     };
 
     const apply = () => {
-        dispatch(setFilmsByFilters(sort, selectedGenres, score, pagination.page))
+        dispatch(setFilms(1, sort, selectedGenres, score))
     }
     const reset = () => {
         setSelectedGenres([]);

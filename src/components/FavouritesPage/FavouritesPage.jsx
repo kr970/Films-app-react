@@ -5,18 +5,14 @@ import { Box } from '@mui/material';
 
 
 const FavouritePage = () => {
-
+    
     const favourites = useSelector(state => state.favouritesData.favourites);
 
     const spawnFilmsCard = () => {
         return (
             favourites.map(item => <FilmCard
                 key={item.id}
-                path={item.posterPath}
-                title={item.originalTitle}
-                release={item.releaseDate}
-                average={item.voteAverage}
-                id={item.id}
+                film={item}
                 favourites={favourites}
             />)
         )
