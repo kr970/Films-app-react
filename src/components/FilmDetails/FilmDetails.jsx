@@ -47,7 +47,7 @@ const FilmDetails = () => {
                     <Typography variant="h5" sx={{ mb: 4 }}>
                         {selectedFilm.title}
                     </Typography>
-                    <Typography variant="subtitle1" sx={{ mb: 1}}>
+                    <Typography variant="subtitle1" sx={{ mb: 1 }}>
                         {selectedFilm.language}
                     </Typography>
                     <Typography variant="subtitle1" sx={{ mb: 1 }}>
@@ -56,7 +56,7 @@ const FilmDetails = () => {
                     <Box>
                         <CircularProgress average={selectedFilm.average} />
                     </Box>
-                    <Typography variant="subtitle1" sx={{ mb: 1}}>
+                    <Typography variant="subtitle1" sx={{ mb: 1 }}>
                         {selectedFilm.overview}
                     </Typography>
                 </Box>

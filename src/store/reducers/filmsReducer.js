@@ -24,7 +24,7 @@ export default function filmsReducer(state = initialState, action) {
                     totalResults: action.payload.totalResults
                 }
             };
-        case 'SET_SELECTED_FILM': 
+        case 'SET_SELECTED_FILM':
             return {
                 ...state,
                 selectedFilm: action.payload
@@ -38,13 +38,13 @@ export default function filmsReducer(state = initialState, action) {
             }
         case 'CHANGE_PAGE':
             return {
-                ...state, 
+                ...state,
                 pagination: {
                     ...state.pagination,
                     page: action.payload
                 }
             }
-        case 'SET_SEARCH': 
+        case 'SET_SEARCH':
             return {
                 ...state,
                 search: action.payload

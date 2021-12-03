@@ -29,7 +29,7 @@ const Header = () => {
                     </Tabs>
                 </Box>
                 <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-                    <Typography variant="body1" sx={{ pt:1.5 }}>{userName}</Typography>
+                    <Typography variant="body1" sx={{ pt: 1.5 }}>{userName}</Typography>
                     <IconButton color='inherit' onClick={logout}>
                         <AccountCircle sx={{ fontSize: 40 }} />
                     </IconButton>

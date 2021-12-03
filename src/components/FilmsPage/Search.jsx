@@ -34,7 +34,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 const SearchWrapper = (props) => {
     return (
-        <Search 
+        <Search
             onKeyUp={props.onKeyUp}
             sx={{ width: '90%' }}
         >
@@ -46,7 +46,7 @@ const SearchWrapper = (props) => {
                 inputProps={{ 'aria-label': 'search' }}
                 onFocus={props.onFocus}
                 onMouseOut={props.onMouseOut}
-                sx={{ width: '100%'}}
+                sx={{ width: '100%' }}
             />
         </Search>
     )

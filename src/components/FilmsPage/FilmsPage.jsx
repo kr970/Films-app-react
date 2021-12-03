@@ -16,7 +16,7 @@ const Films = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if(searchValue) {
+        if (searchValue) {
             dispatch(setFilmsByName(searchValue, pagination.page))
         } else {
             dispatch(setFilms(pagination.page))
@@ -34,7 +34,7 @@ const Films = () => {
         }
         setSearchQuery(e.target.value);
     }
-    
+
     const focusOnSearch = () => {
         setIsSearching(true)
     }
@@ -60,11 +60,11 @@ const Films = () => {
     return (
         <Box sx={{ display: 'flex' }}>
             <Fade in={!isSearching}>
-                <Box sx={{display: isSearching || searchQuery ? 'none' : 'flex'}}><SideBar /></Box>
+                <Box sx={{ display: isSearching || searchQuery ? 'none' : 'flex' }}><SideBar /></Box>
             </Fade>
             <Box sx={{ display: 'flex', flexDirection: 'column', flexWrap: 'wrap', justifyContent: 'center', mt: 1, mb: 2 }}>
                 <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                    <Search onKeyUp={handleOnKeyUp} onFocus={focusOnSearch} onMouseOut={onMouseOut}/>
+                    <Search onKeyUp={handleOnKeyUp} onFocus={focusOnSearch} onMouseOut={onMouseOut} />
                 </Box>
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', mt: 2, }}>
                     {spawnFilmsCard()}

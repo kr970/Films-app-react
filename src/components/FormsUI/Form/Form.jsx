@@ -81,41 +81,41 @@ const CustomForm = () => {
 
     return (
         currentUser ? <Navigate to="/films" /> : <Container maxWidth="xs" sx={{ mt: 10 }}>
-        <Formik
-            initialValues={{ ...INITIAL_FORM_STATE }}
-            validationSchema={showSignUp ? SIGN_UP_VALIDATION : SIGN_IN_VALIDATION}
-            onSubmit={values => handleOnSubmit(values)}
-        >
-            <Form>
-                <Box className={classes.box}>
-                    <AccountCircleIcon
-                        sx={{
-                            fontSize: 50,
-                            color: lightBlue[900]
-                        }}>
-                    </AccountCircleIcon>
-                    <Typography variant="h5" className={classes.title} sx={{ mb: 3 }}>
-                        {showSignUp ? 'Sing up' : 'Sing in'}
-                    </Typography>
-                    <TextfieldWrapper name="userName" label="User Name" />
-                    <TextfieldWrapper name="password" label="Password" type="password" />
-                    {showSignUp && <TextfieldWrapper name="email" label="Email" />}
-                    <Button>Submit</Button>
-                    <Link
-                        onClick={changeForm}
-                        href='#'
-                        variant='subtitle2'
-                        className={classes.link}
-                    >
-                        {showSignUp ? 'Already have an account? Sign in' : 'Create an Acount'}
-                    </Link>
-                    <Typography variant='subtitle2' color='red'>
-                        {loginFailed ? 'Login failed' : ''}
-                    </Typography>
-                </Box>
-            </Form>
-        </Formik>
-    </Container>
+            <Formik
+                initialValues={{ ...INITIAL_FORM_STATE }}
+                validationSchema={showSignUp ? SIGN_UP_VALIDATION : SIGN_IN_VALIDATION}
+                onSubmit={values => handleOnSubmit(values)}
+            >
+                <Form>
+                    <Box className={classes.box}>
+                        <AccountCircleIcon
+                            sx={{
+                                fontSize: 50,
+                                color: lightBlue[900]
+                            }}>
+                        </AccountCircleIcon>
+                        <Typography variant="h5" className={classes.title} sx={{ mb: 3 }}>
+                            {showSignUp ? 'Sing up' : 'Sing in'}
+                        </Typography>
+                        <TextfieldWrapper name="userName" label="User Name" />
+                        <TextfieldWrapper name="password" label="Password" type="password" />
+                        {showSignUp && <TextfieldWrapper name="email" label="Email" />}
+                        <Button>Submit</Button>
+                        <Link
+                            onClick={changeForm}
+                            href='#'
+                            variant='subtitle2'
+                            className={classes.link}
+                        >
+                            {showSignUp ? 'Already have an account? Sign in' : 'Create an Acount'}
+                        </Link>
+                        <Typography variant='subtitle2' color='red'>
+                            {loginFailed ? 'Login failed' : ''}
+                        </Typography>
+                    </Box>
+                </Form>
+            </Formik>
+        </Container>
     )
 }
 

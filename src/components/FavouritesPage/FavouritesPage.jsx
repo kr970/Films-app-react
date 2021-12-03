@@ -5,7 +5,7 @@ import { Box } from '@mui/material';
 
 
 const FavouritePage = () => {
-    
+
     const favourites = useSelector(state => state.favouritesData.favourites);
 
     const spawnFilmsCard = () => {
