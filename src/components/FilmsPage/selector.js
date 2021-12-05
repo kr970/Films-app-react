@@ -2,12 +2,20 @@ export const filmsSelector = ({
     filmsData: {
         films,
         pagination,
-        search
+        search,
+        filters: {
+            genres,
+            userScore,
+            sort
+        }
     }
 }) => ({
     films,
     pagination,
-    search
+    searchValue: search,
+    genres,
+    userScore,
+    sort
 });
 
 export const favouritesSelector = ({

@@ -3,12 +3,14 @@ import React from 'react';
 import { Box, Typography } from '@mui/material';
 import Slider from '@mui/material/Slider';
 
+import { styles } from './sideBarStyles';
+
 const RangeSlider = ({ score, setScore }) => {
     const calculateValue = (value) => {
         return 10 * value;
     }
     return (
-        <Box sx={{ width: 280 }}>
+        <Box sx={styles.rangeBox}>
             <Typography variant="subtitle1">
                 User Score
             </Typography>

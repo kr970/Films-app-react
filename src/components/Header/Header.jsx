@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 
@@ -7,12 +7,20 @@ import { userSelector } from './selector';
 
 import { AppBar, IconButton, Toolbar, Box, Tabs, Tab, Typography } from '@mui/material';
 import AccountCircle from '@mui/icons-material/AccountCircle';
+import { ThemeProvider } from '@mui/material/styles';
 
+import { theme, styles } from './headerStyles';
 
 const Header = () => {
     const dispatch = useDispatch();
     const { userName } = useSelector(userSelector);
     const navigate = useNavigate();
+
+    const [tab, setTab] = useState(0);
+
+    const changeTab = (_, value) => {
+        setTab(value);
+    };
 
     const logout = () => {
         dispatch(logoutAC());
@@ -20,18 +28,26 @@ const Header = () => {
     }
 
     return (
-        <AppBar position="static" color="primary">
+        <AppBar position="static" color={"primary"}>
             <Toolbar>
-                <Box sx={{ flexGrow: 1 }}>
-                    <Tabs value={0} aria-label="basic tabs example" textColor="secondary" indicatorColor="secondary">
-                        <Tab label="Films" onClick={() => navigate("/films")} />
-                        <Tab label="Favourites" onClick={() => navigate("/favourites")} />
-                    </Tabs>
+                <Box sx={styles.tabsContainer}>
+                    <ThemeProvider theme={theme}>
+                        <Tabs 
+                            value={tab} 
+                            onChange={changeTab} 
+                            aria-label="tabs" 
+                            textColor="secondary" 
+                            indicatorColor="secondary"
+                        >
+                            <Tab label="Films" onClick={() => navigate("/films")} />
+                            <Tab label="Favourites" onClick={() => navigate("/favourites")} />
+                        </Tabs>
+                    </ThemeProvider>
                 </Box>
-                <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-                    <Typography variant="body1" sx={{ pt: 1.5 }}>{userName}</Typography>
+                <Box sx={styles.iconContainer}>
+                    <Typography variant="body1" sx={styles.typography}>{userName}</Typography>
                     <IconButton color='inherit' onClick={logout}>
-                        <AccountCircle sx={{ fontSize: 40 }} />
+                        <AccountCircle sx={styles.icon} />
                     </IconButton>
 
                 </Box>

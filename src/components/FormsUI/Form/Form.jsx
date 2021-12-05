@@ -1,41 +1,17 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux';
+import { Navigate } from 'react-router';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 
 import TextfieldWrapper from '../Textfield/Textfield'
-import Button from '../Button/Button';
 import { changeShowSignUpFlag, login, addUserData } from '../../../store/actions/formActions';
 import { formSelector } from './selector';
 
-import { Container, Typography, Box, Link } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+import { Container, Typography, Box, Link, Button } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { lightBlue } from '@mui/material/colors';
-import { Navigate } from 'react-router';
 
-const useStyles = makeStyles({
-    box: {
-        padding: '20px',
-        border: '2px solid',
-        borderColor: lightBlue[800],
-        borderRadius: '15px',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-    },
-    link: {
-        color: lightBlue[800],
-    },
-    title: {
-        color: lightBlue[800],
-        textTransform: 'uppercase',
-    },
-    icon: {
-        fontSize: 50,
-        color: lightBlue[900]
-    }
-});
+import { styles } from './formStyle';
 
 const INITIAL_FORM_STATE = {
     email: '',
@@ -61,11 +37,10 @@ const SIGN_UP_VALIDATION = SIGN_IN_VALIDATION.concat(
 )
 
 const CustomForm = () => {
-    const classes = useStyles();
 
     const dispatcher = useDispatch();
     const { showSignUp, loginFailed, currentUser } = useSelector(formSelector);
-    const borderColor = loginFailed ? lightBlue[900] : lightBlue[500];    // COLOR
+    // const borderColor = loginFailed ? lightBlue[900] : lightBlue[500];  
 
     const changeForm = () => {
         dispatcher(changeShowSignUpFlag(!showSignUp));
@@ -80,33 +55,25 @@ const CustomForm = () => {
     }
 
     return (
-        currentUser ? <Navigate to="/films" /> : <Container maxWidth="xs" sx={{ mt: 10 }}>
+        currentUser ? <Navigate to="/films" /> : <Container maxWidth="xs" sx={styles.container}>
             <Formik
                 initialValues={{ ...INITIAL_FORM_STATE }}
                 validationSchema={showSignUp ? SIGN_UP_VALIDATION : SIGN_IN_VALIDATION}
                 onSubmit={values => handleOnSubmit(values)}
             >
                 <Form>
-                    <Box className={classes.box}>
-                        <AccountCircleIcon
-                            sx={{
-                                fontSize: 50,
-                                color: lightBlue[900]
-                            }}>
-                        </AccountCircleIcon>
-                        <Typography variant="h5" className={classes.title} sx={{ mb: 3 }}>
+                    <Box sx={styles.box}>
+                        <AccountCircleIcon sx={styles.icon}></AccountCircleIcon>
+                        <Typography variant="h5" sx={styles.title}>
                             {showSignUp ? 'Sing up' : 'Sing in'}
                         </Typography>
                         <TextfieldWrapper name="userName" label="User Name" />
                         <TextfieldWrapper name="password" label="Password" type="password" />
                         {showSignUp && <TextfieldWrapper name="email" label="Email" />}
-                        <Button>Submit</Button>
-                        <Link
-                            onClick={changeForm}
-                            href='#'
-                            variant='subtitle2'
-                            className={classes.link}
-                        >
+                        <Button fullWidth='true' type='submit' variant='contained' sx={styles.button}>
+                            Submit
+                        </Button>
+                        <Link onClick={changeForm} href='#' variant='subtitle2' sx={styles.link}>
                             {showSignUp ? 'Already have an account? Sign in' : 'Create an Acount'}
                         </Link>
                         <Typography variant='subtitle2' color='red'>

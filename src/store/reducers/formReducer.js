@@ -28,10 +28,7 @@ export default function signUpReducer(state = initialState, action) {
                 currentUser: user
             };
         case 'LOGOUT':
-            return {
-                ...state,
-                currentUser: action.payload
-            }
+            return initialState;
         case 'ADD_USER_DATA':
             return {
                 ...state,

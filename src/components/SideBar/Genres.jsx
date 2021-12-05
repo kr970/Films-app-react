@@ -6,6 +6,7 @@ import { allGenresSelector } from './selector';
 
 import { Button, Typography } from '@mui/material';
 
+import { styles } from './sideBarStyles';
 
 const Genres = ({ selectedGenres, toggleGenre }) => {
 
@@ -20,7 +21,7 @@ const Genres = ({ selectedGenres, toggleGenre }) => {
         return (
             genres.map(item =>
                 <Button
-                    sx={{ mr: 1, mt: 1 }}
+                    sx={styles.genresButton}
                     size='small'
                     key={item.id}
                     variant={selectedGenres.includes(item.id) ? 'contained' : 'outlined'}
@@ -34,9 +35,7 @@ const Genres = ({ selectedGenres, toggleGenre }) => {
 
     return (
         <>
-            <Typography variant="subtitle1">
-                Genres
-            </Typography>
+            <Typography variant="subtitle1">Genres</Typography>
             {spawnGenres()}
         </>
     )

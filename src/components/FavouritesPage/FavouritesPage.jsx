@@ -1,11 +1,15 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+
 import FilmCard from '../FilmCard/FilmCard';
+import NotFound from '../NotFoundPage/NotFoundPage';
+
+import { styles } from './favouriteStyles';
+
 import { Box } from '@mui/material';
 
 
-const FavouritePage = () => {
-
+const FavouritePage = () => {  
     const favourites = useSelector(state => state.favouritesData.favourites);
 
     const spawnFilmsCard = () => {
@@ -19,10 +23,9 @@ const FavouritePage = () => {
     }
 
     return (
-        <Box sx={{ display: 'flex' }}>
-            <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', mt: 2, }}>
+        !favourites.toString() ? <NotFound /> :
+        <Box sx={styles.favourites}>
                 {spawnFilmsCard()}
-            </Box>
         </Box>
     )
 }

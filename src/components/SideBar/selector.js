@@ -10,12 +10,10 @@ export const allGenresSelector = ({
 
 export const filtersSelector = ({
     filmsData: {
-        filters: {
-            userScore
-        }
+        filters
     }
 }) => ({
-    userScore
+    ...filters
 });
 
 export const filmsSelector = ({

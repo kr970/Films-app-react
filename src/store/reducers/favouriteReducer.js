@@ -15,6 +15,8 @@ export default function favoritesReducer(state = initialState, action) {
                 ...state,
                 favourites: filteredFavourites
             };
+        case 'LOGOUT':
+            return initialState;
         default:
             return state;
     }

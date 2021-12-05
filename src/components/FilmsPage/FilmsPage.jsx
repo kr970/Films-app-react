@@ -1,30 +1,36 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { setFilms, setFilmsByName, changePageAC, setSearchAC } from '../../store/actions/filmsActions';
+import { setFilms, setFilmsByName, changePageAC, setSearchAC, toggleLoadingAC, setFiltersAC } from '../../store/actions/filmsActions';
 import { filmsSelector, favouritesSelector } from './selector';
 import FilmCard from '../FilmCard/FilmCard';
 import Search from './Search';
 import SideBar from '../SideBar/SideBar';
+import NotFound from '../NotFoundPage/NotFoundPage';
+import { FILMSPERPAGE } from '../../ constants/constants';
 
 import { Box, Pagination } from '@mui/material';
 import Fade from '@mui/material/Fade';
 
-const Films = () => {
-    const { films, pagination, searchValue } = useSelector(filmsSelector);
+import { styles } from './filmsPageStyle';
+
+const FilmsPage = () => {
+    const { films, pagination, searchValue, genres, userScore, sort } = useSelector(filmsSelector);
     const { favourites } = useSelector(favouritesSelector);
     const dispatch = useDispatch();
+
+    const [searchQuery, setSearchQuery] = useState('');
+    const [isSearching, setIsSearching] = useState(false);
+
+    const hidePagination = films.length < FILMSPERPAGE;
 
     useEffect(() => {
         if (searchValue) {
             dispatch(setFilmsByName(searchValue, pagination.page))
         } else {
-            dispatch(setFilms(pagination.page))
+            dispatch(setFilms(pagination.page, sort, genres, userScore))
         }
     }, [pagination.page, searchValue]);
-
-    const [searchQuery, setSearchQuery] = useState('');
-    const [isSearching, setIsSearching] = useState(false);
 
     const handleOnKeyUp = (e) => {
         if (e.keyCode === 13) {
@@ -33,6 +39,9 @@ const Films = () => {
             return;
         }
         setSearchQuery(e.target.value);
+        if (!e.target.value) {
+            dispatch(setFilms(pagination.page, sort, genres, userScore))
+        }
     }
 
     const focusOnSearch = () => {
@@ -62,25 +71,27 @@ const Films = () => {
             <Fade in={!isSearching}>
                 <Box sx={{ display: isSearching || searchQuery ? 'none' : 'flex' }}><SideBar /></Box>
             </Fade>
-            <Box sx={{ display: 'flex', flexDirection: 'column', flexWrap: 'wrap', justifyContent: 'center', mt: 1, mb: 2 }}>
-                <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                    <Search onKeyUp={handleOnKeyUp} onFocus={focusOnSearch} onMouseOut={onMouseOut} />
+                <Box sx={styles.contentContainer}>
+                    <Box sx={styles.flexContainer}>
+                        <Search onKeyUp={handleOnKeyUp} onFocus={focusOnSearch} onMouseOut={onMouseOut} />
+                    </Box>
+                    {!films.length ? <NotFound /> :
+                    <Box sx={{ ...styles.cardContainer, ...styles.flexContainer }}>
+                        {spawnFilmsCard()}
+                    </Box>}
+                    {hidePagination ? null : 
+                    <Box sx={styles.flexContainer}>
+                        <Pagination
+                            onChange={changePage}
+                            page={pagination.page}
+                            count={pagination.total_pages}
+                            color="primary"
+                            size="large" />
+                    </Box> }
                 </Box>
-                <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', mt: 2, }}>
-                    {spawnFilmsCard()}
-                </Box>
-                <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                    <Pagination
-                        onChange={changePage}
-                        page={pagination.page}
-                        count={pagination.totalPages}
-                        color="primary"
-                        size="large" />
-                </Box>
-            </Box>
         </Box>
     )
 }
 
 
-export default Films;
+export default FilmsPage;

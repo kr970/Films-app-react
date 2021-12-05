@@ -7,51 +7,44 @@ import {
     MOVIE_URL
 } from '../../ constants/constants';
 
-function fieldsToCamelCase(obj) {
-    const mapped = {};
 
-    Object.keys(obj).forEach(key => {
-        const mapKey = (item, index) => index ? item[0].toUpperCase() + item.slice(1) : item;
-        const mappedKey = key.split('_').map(mapKey).join('');
+const toggleErrorAC = (errorMessage = '') => {
+    return {
+        type: 'TOGGLE_ERROR',
+        payload: errorMessage
+    }  
+}
 
-        mapped[mappedKey] = obj[key];
-    });
-
-    return mapped;
+export const toggleLoadingAC = (value) => {
+    return {
+        type: 'TOGGLE_LOADING',
+        payload: value
+    }
 }
 
 const loadFilms = (endpoint, page, params, dispatch) => {
+    dispatch(toggleLoadingAC(true));
     fetch(`${BASE_URL}${endpoint}api_key=${API_KEY}&page=${page}${params}`)
         .then(response => response.json())
-        .then(data => ({
-            page: data.page,
-            results: data.results.map(fieldsToCamelCase),
-            totalPages: data.total_pages,
-            totalResults: data.total_results,
-        }))
         .then(data => dispatch({ type: 'SET_FILMS', payload: data }))
-        .catch(e => {
-            console.log(e)
+        .then(() => {
+            dispatch(toggleErrorAC())
         })
+        .catch(e => {
+            dispatch(toggleErrorAC(e.message))
+        })
+        .finally(() => dispatch(toggleLoadingAC(false)))
 }
 export const loadFilmAC = (id) => (dispatch) => {
+    dispatch(toggleErrorAC());
     fetch(`${BASE_URL}${MOVIE_URL}${id}?api_key=${API_KEY}`)
         .then(response => response.json())
-        .then(data => ({
-            backdropImage: data.backdrop_path,
-            image: data.poster_path,
-            genres: data.genres,
-            id: data.id,
-            language: data.original_language,
-            title: data.original_title,
-            overview: data.overview,
-            runtime: data.runtime,
-            releaseDate: data.release_date,
-            average: data.vote_average
-        }))
         .then(data => dispatch({ type: 'SET_SELECTED_FILM', payload: data }))
+        .then(() => {
+            dispatch(toggleErrorAC())
+        })
         .catch(e => {
-            console.log(e)
+            dispatch(toggleErrorAC(e.message))
         })
 }
 
@@ -67,7 +60,7 @@ const filtersToQueryParams = (sort, genreIds, score) => {
 }
 
 export const setFilms = (page, sort, genreIds, score) => (dispatch) => {
-    const target = sort || genreIds || score;
+    const target = sort || genreIds.toString() || score.toString();
     const params = target ? filtersToQueryParams(sort, genreIds, score) : '';
     loadFilms(
         DISCOVER_URL,
@@ -86,6 +79,17 @@ export const setGenres = () => (dispatch) => {
         })
 }
 
+export const setFiltersAC = (genres, userScore, sort)  => {
+    return {
+        type: 'SET_FILTERS',
+        payload: {
+            genres, 
+            userScore,
+            sort
+        }
+    }
+}
+
 export const changePageAC = (page) => {
     return {
         type: 'CHANGE_PAGE',
@@ -99,6 +103,5 @@ export const setSearchAC = (value) => {
         payload: value
     }
 }
-
 
 

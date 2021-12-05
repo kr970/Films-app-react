@@ -3,6 +3,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { styled } from '@mui/material/styles';
 import { InputBase } from '@mui/material';
 
+import { styles } from './filmsPageStyle';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -36,7 +37,7 @@ const SearchWrapper = (props) => {
     return (
         <Search
             onKeyUp={props.onKeyUp}
-            sx={{ width: '90%' }}
+            sx={styles.search}
         >
             <SearchIconWrapper >
                 <SearchIcon />
@@ -46,7 +47,7 @@ const SearchWrapper = (props) => {
                 inputProps={{ 'aria-label': 'search' }}
                 onFocus={props.onFocus}
                 onMouseOut={props.onMouseOut}
-                sx={{ width: '100%' }}
+                sx={styles.searchInput}
             />
         </Search>
     )
