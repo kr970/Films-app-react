@@ -9,6 +9,7 @@ const RangeSlider = ({ score, setScore }) => {
     const calculateValue = (value) => {
         return 10 * value;
     }
+
     return (
         <Box sx={styles.rangeBox}>
             <Typography variant="subtitle1">
@@ -26,6 +27,5 @@ const RangeSlider = ({ score, setScore }) => {
         </Box>
     );
 }
-
 
 export default RangeSlider;

@@ -4,7 +4,7 @@ export const styles = {
     box: {
         p: 2,
         border: '2px solid',
-        borderColor: lightBlue[800],
+        // borderColor: lightBlue[800],
         borderRadius: '15px',
         display: 'flex',
         flexDirection: 'column',

@@ -27,5 +27,4 @@ const Sorting = ({ sort, selectSort }) => {
     );
 }
 
-
 export default Sorting;

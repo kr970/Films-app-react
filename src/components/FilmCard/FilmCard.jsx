@@ -51,7 +51,7 @@ const FilmCard = (props) => {
                 <IconButton
                     aria-label="add to fav"
                     sx={{ color: isFavourite ? blue[700] : blue[100] }}
-                    onClick={() => isFavourite ? 
+                    onClick={() => isFavourite ?
                         removeFromFavourites(props.film) : addToFavourites(props.film)}
                 >
                     <FavoriteIcon />

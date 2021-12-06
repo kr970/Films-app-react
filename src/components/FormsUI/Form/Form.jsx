@@ -6,10 +6,12 @@ import * as Yup from 'yup';
 
 import TextfieldWrapper from '../Textfield/Textfield'
 import { changeShowSignUpFlag, login, addUserData } from '../../../store/actions/formActions';
+import { setNotification } from '../../../store/actions/notificationActions';
 import { formSelector } from './selector';
 
 import { Container, Typography, Box, Link, Button } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { lightBlue, red } from '@mui/material/colors';
 
 import { styles } from './formStyle';
 
@@ -37,10 +39,9 @@ const SIGN_UP_VALIDATION = SIGN_IN_VALIDATION.concat(
 )
 
 const CustomForm = () => {
-
     const dispatcher = useDispatch();
     const { showSignUp, loginFailed, currentUser } = useSelector(formSelector);
-    // const borderColor = loginFailed ? lightBlue[900] : lightBlue[500];  
+    const borderColor = loginFailed ? red[500] : lightBlue[800];
 
     const changeForm = () => {
         dispatcher(changeShowSignUpFlag(!showSignUp));
@@ -48,7 +49,8 @@ const CustomForm = () => {
 
     const handleOnSubmit = ({ userName, password, email }) => {
         if (showSignUp) {
-            dispatcher(addUserData(userName, password, email))
+            dispatcher(addUserData(userName, password, email));
+            dispatcher(setNotification(`User ${userName} successfully registered!`));
             return;
         }
         dispatcher(login(userName, password));
@@ -62,7 +64,7 @@ const CustomForm = () => {
                 onSubmit={values => handleOnSubmit(values)}
             >
                 <Form>
-                    <Box sx={styles.box}>
+                    <Box sx={{ ...styles.box, borderColor: borderColor }}>
                         <AccountCircleIcon sx={styles.icon}></AccountCircleIcon>
                         <Typography variant="h5" sx={styles.title}>
                             {showSignUp ? 'Sing up' : 'Sing in'}
@@ -70,7 +72,7 @@ const CustomForm = () => {
                         <TextfieldWrapper name="userName" label="User Name" />
                         <TextfieldWrapper name="password" label="Password" type="password" />
                         {showSignUp && <TextfieldWrapper name="email" label="Email" />}
-                        <Button fullWidth='true' type='submit' variant='contained' sx={styles.button}>
+                        <Button fullWidth type='submit' variant='contained' sx={styles.button}>
                             Submit
                         </Button>
                         <Link onClick={changeForm} href='#' variant='subtitle2' sx={styles.link}>

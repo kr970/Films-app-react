@@ -12,12 +12,14 @@ import FavouritesPage from './components/FavouritesPage/FavouritesPage';
 import { PrivateRoute } from './routing/PrivateRoute';
 import Spinner from './components/Spinner/Spinner';
 import Error from './components/Error/Error';
+import Notification from './components/Notification/Notification';
 
 function App() {
 	return (
 		<Provider store={store}>
 			<Spinner />
 			<Error />
+			<Notification />
 			<BrowserRouter>
 				<Routes>
 					<Route path="/" element={<Navigate to="/films" />} />

@@ -9,7 +9,7 @@ import { styles } from './favouriteStyles';
 import { Box } from '@mui/material';
 
 
-const FavouritePage = () => {  
+const FavouritePage = () => {
     const favourites = useSelector(state => state.favouritesData.favourites);
 
     const spawnFilmsCard = () => {
@@ -24,9 +24,9 @@ const FavouritePage = () => {
 
     return (
         !favourites.toString() ? <NotFound /> :
-        <Box sx={styles.favourites}>
+            <Box sx={styles.favourites}>
                 {spawnFilmsCard()}
-        </Box>
+            </Box>
     )
 }
 

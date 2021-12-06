@@ -32,7 +32,8 @@ export default function signUpReducer(state = initialState, action) {
         case 'ADD_USER_DATA':
             return {
                 ...state,
-                userData: [...state.userData, action.payload]
+                userData: [...state.userData, action.payload],
+                showSignUp: false
             }
         default:
             return state;

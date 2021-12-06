@@ -6,6 +6,7 @@ import { styles } from './filmsPageStyle';
 
 const CircularProgressWithLabel = (props) => {
     const roundedAverage = Math.round(props.average * 10);
+
     return (
         <Box sx={styles.progressBar}>
             <CircularProgress variant="determinate" value={roundedAverage} />

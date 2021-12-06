@@ -15,7 +15,6 @@ const Header = () => {
     const dispatch = useDispatch();
     const { userName } = useSelector(userSelector);
     const navigate = useNavigate();
-
     const [tab, setTab] = useState(0);
 
     const changeTab = (_, value) => {
@@ -32,11 +31,11 @@ const Header = () => {
             <Toolbar>
                 <Box sx={styles.tabsContainer}>
                     <ThemeProvider theme={theme}>
-                        <Tabs 
-                            value={tab} 
-                            onChange={changeTab} 
-                            aria-label="tabs" 
-                            textColor="secondary" 
+                        <Tabs
+                            value={tab}
+                            onChange={changeTab}
+                            aria-label="tabs"
+                            textColor="secondary"
                             indicatorColor="secondary"
                         >
                             <Tab label="Films" onClick={() => navigate("/films")} />
@@ -55,6 +54,5 @@ const Header = () => {
         </AppBar>
     )
 }
-
 
 export default Header;

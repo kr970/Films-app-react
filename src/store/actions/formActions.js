@@ -1,28 +1,29 @@
+import { FORM_TYPES } from './types';
 
 export const changeShowSignUpFlag = (showSignUp) => {
     return {
-        type: 'CHANGE_SHOW_SIGN_UP_FLAG',
+        type: FORM_TYPES.CHANGE_SHOW_SIGN_UP_FLAG,
         payload: showSignUp
     }
 }
 
 export const login = (userName, password) => {
     return {
-        type: 'LOGIN',
+        type: FORM_TYPES.LOGIN,
         payload: { userName, password }
     }
 }
 
 export const logoutAC = () => {
     return {
-        type: 'LOGOUT',
+        type: FORM_TYPES.LOGOUT,
         payload: null
     }
 }
 
 export const addUserData = (userName, password, email) => {
     return {
-        type: 'ADD_USER_DATA',
+        type: FORM_TYPES.ADD_USER_DATA,
         payload: { userName, password, email }
     }
 }

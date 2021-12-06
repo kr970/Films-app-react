@@ -5,15 +5,16 @@ export const styles = {
         backgroundColor: 'rgba(0, 0, 0, 0.1)',
         height: `calc(100% - 64px)`,
         backgroundSize: 'cover',
+        pt: 5
     },
     flexContainer: {
         display: 'flex', 
         flexDirection: 'column', 
         flexWrap: 'wrap', 
         color: grey[50], 
-        pl: 20, 
-        pt: 5, 
-        maxWidth: '1000px'
+        ml: 20, 
+        maxWidth: '1000px',
+        backgroundColor: 'rgba(27, 31, 34, 0.1)'
     },
     typography : {
         mb: 1

@@ -1,7 +1,7 @@
+import { useSelector } from 'react-redux';
 
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-import { useSelector } from 'react-redux';
 
 
 const Error = () => {
@@ -9,8 +9,8 @@ const Error = () => {
 
     return (
         <Snackbar
-            anchorOrigin={{vertical: 'top', horizontal: 'right'}}
-            open={error}
+            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            open={!!error}
             autoHideDuration={6000}
             message={error}
         >

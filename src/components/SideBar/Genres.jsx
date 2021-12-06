@@ -15,7 +15,7 @@ const Genres = ({ selectedGenres, toggleGenre }) => {
 
     useEffect(() => {
         dispatch(setGenres())
-    }, []);
+    }, [dispatch]);
 
     const spawnGenres = () => {
         return (
@@ -40,6 +40,5 @@ const Genres = ({ selectedGenres, toggleGenre }) => {
         </>
     )
 }
-
 
 export default Genres;

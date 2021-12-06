@@ -8,10 +8,8 @@ import { filmsSelector } from './selector';
 import { IMAGE_URL_PREFIX } from '../../ constants/constants';
 
 import { Box, Paper, Typography } from '@mui/material';
+
 import { styles } from './filmDetailsStyles';
-
-
-
 
 const FilmDetails = () => {
     const { selectedFilm } = useSelector(filmsSelector);
@@ -22,24 +20,23 @@ const FilmDetails = () => {
 
     useEffect(() => {
         dispatch(loadFilmAC(id))
-    }, []);
+    }, [id, dispatch]);
 
-    
     return (
-        <Paper sx={{...styles.paperContainer, backgroundImage: `url(${image})`}}>
-                <Box sx={styles.flexContainer}>
-                    <Typography variant="h3" sx={styles.title}>
-                        {selectedFilm.original_title}
-                    </Typography>
-                    <Typography variant="h6" sx={styles.subtitle}>
-                        {selectedFilm.original_language}
-                    </Typography>
-                    <Typography variant="h6" sx={styles.typography}>
-                        {selectedFilm.release_date}
-                    </Typography>
-                    <Typography variant="h6" sx={styles.typography}>
-                        {selectedFilm.overview}
-                    </Typography>
+        <Paper sx={{ ...styles.paperContainer, backgroundImage: `url(${image})` }}>
+            <Box sx={styles.flexContainer}>
+                <Typography variant="h3" sx={styles.title}>
+                    {selectedFilm.original_title}
+                </Typography>
+                <Typography variant="h6" sx={styles.subtitle}>
+                    {selectedFilm.original_language}
+                </Typography>
+                <Typography variant="h6" sx={styles.typography}>
+                    {selectedFilm.release_date}
+                </Typography>
+                <Typography variant="h6" sx={styles.typography}>
+                    {selectedFilm.overview}
+                </Typography>
             </Box>
         </Paper>
     )

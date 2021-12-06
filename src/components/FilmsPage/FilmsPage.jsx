@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { setFilms, setFilmsByName, changePageAC, setSearchAC, toggleLoadingAC, setFiltersAC } from '../../store/actions/filmsActions';
+import { setFilms, setFilmsByName, changePageAC, setSearchAC } from '../../store/actions/filmsActions';
 import { filmsSelector, favouritesSelector } from './selector';
 import FilmCard from '../FilmCard/FilmCard';
 import Search from './Search';
@@ -19,7 +19,7 @@ const FilmsPage = () => {
     const { favourites } = useSelector(favouritesSelector);
     const dispatch = useDispatch();
 
-    const [searchQuery, setSearchQuery] = useState('');
+    const [searchQuery, setSearchQuery] = useState(searchValue);
     const [isSearching, setIsSearching] = useState(false);
 
     const hidePagination = films.length < FILMSPERPAGE;
@@ -30,7 +30,7 @@ const FilmsPage = () => {
         } else {
             dispatch(setFilms(pagination.page, sort, genres, userScore))
         }
-    }, [pagination.page, searchValue]);
+    }, [pagination.page, searchValue, sort, genres, userScore, dispatch]);
 
     const handleOnKeyUp = (e) => {
         if (e.keyCode === 13) {
@@ -40,6 +40,13 @@ const FilmsPage = () => {
         }
         setSearchQuery(e.target.value);
         if (!e.target.value) {
+            dispatch(setFilms(pagination.page, sort, genres, userScore))
+        }
+    }
+
+    const onChange = value => {
+        setSearchQuery(value);
+        if (!value) {
             dispatch(setFilms(pagination.page, sort, genres, userScore))
         }
     }
@@ -71,15 +78,21 @@ const FilmsPage = () => {
             <Fade in={!isSearching}>
                 <Box sx={{ display: isSearching || searchQuery ? 'none' : 'flex' }}><SideBar /></Box>
             </Fade>
-                <Box sx={styles.contentContainer}>
-                    <Box sx={styles.flexContainer}>
-                        <Search onKeyUp={handleOnKeyUp} onFocus={focusOnSearch} onMouseOut={onMouseOut} />
-                    </Box>
-                    {!films.length ? <NotFound /> :
+            <Box sx={styles.contentContainer}>
+                <Box sx={styles.flexContainer}>
+                    <Search 
+                        onKeyUp={handleOnKeyUp}
+                        onFocus={focusOnSearch}
+                        onMouseOut={onMouseOut}
+                        onChange={onChange}
+                        value={searchValue}
+                    />
+                </Box>
+                {!films.length ? <NotFound /> :
                     <Box sx={{ ...styles.cardContainer, ...styles.flexContainer }}>
                         {spawnFilmsCard()}
                     </Box>}
-                    {hidePagination ? null : 
+                {hidePagination ? null :
                     <Box sx={styles.flexContainer}>
                         <Pagination
                             onChange={changePage}
@@ -87,11 +100,10 @@ const FilmsPage = () => {
                             count={pagination.total_pages}
                             color="primary"
                             size="large" />
-                    </Box> }
-                </Box>
+                    </Box>}
+            </Box>
         </Box>
     )
 }
-
 
 export default FilmsPage;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import RangeSlider from '../SideBar/RangeSlider';
@@ -6,16 +6,17 @@ import Genres from '../SideBar/Genres';
 import Sorting from '../SideBar/Sorting';
 import { setFilms, setFiltersAC } from '../../store/actions/filmsActions';
 import { filtersSelector } from './selector';
+import { MIN_USER_SCORE, MAX_USER_SCORE } from '../../ constants/constants';
 
 import { Box, Button } from '@mui/material';
 
 import { styles } from './sideBarStyles';
 
-
 const SideBar = () => {
     const dispatch = useDispatch();
 
     const { genres, userScore, sort } = useSelector(filtersSelector);
+
     const [selectedGenres, setSelectedGenres] = useState(genres);
     const toggleGenre = (genre) => {
         const genres = !selectedGenres.includes(genre) ?
@@ -23,9 +24,7 @@ const SideBar = () => {
         setSelectedGenres(genres);
     };
 
-    
-
-    const [score, setScore] = useState(userScore.length ? userScore : [0, 10]);
+    const [score, setScore] = useState(userScore.length ? userScore : [MIN_USER_SCORE, MAX_USER_SCORE]);
     const setUserScore = (_, value) => {
         setScore(value);
     };
@@ -41,7 +40,7 @@ const SideBar = () => {
     }
     const reset = () => {
         setSelectedGenres([]);
-        setScore([0, 10]);
+        setScore([MIN_USER_SCORE, MAX_USER_SCORE]);
         setSelectedSort('');
         dispatch(setFilms(1, '', [], []))
     }
