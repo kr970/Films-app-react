@@ -23,44 +23,30 @@ export const toggleLoadingAC = (value) => {
     }
 }
 
-const loadFilms = (endpoint, page, params, dispatch) => {
-    dispatch(toggleLoadingAC(true));
-    fetch(`${BASE_URL}${endpoint}api_key=${API_KEY}&page=${page}${params}`)
-        .then(response => response.json())
-        .then(data => dispatch({ type: FILMS_TYPES.SET_FILMS, payload: data }))
-        .then(() => {
-            dispatch(toggleErrorAC())
-        })
-        .catch(e => {
-            dispatch(toggleErrorAC(e.message))
-        })
-        .finally(() => dispatch(toggleLoadingAC(false)))
+const loadFilms = async (endpoint, page, params, dispatch) => {
+    try {
+        dispatch(toggleLoadingAC(true));
+        const response = await fetch(`${BASE_URL}${endpoint}api_key=${API_KEY}&page=${page}${params}`)
+        const data = await response.json()
+        dispatch({ type: FILMS_TYPES.SET_FILMS, payload: data })
+        dispatch(toggleErrorAC())
+    }   catch(e) {
+        dispatch(toggleErrorAC(e.message))
+    }   finally {
+        dispatch(toggleLoadingAC(false))
+    }
 }
 
-export const loadFilmAC = (id) => (dispatch) => {
-    dispatch(toggleErrorAC());
-    fetch(`${BASE_URL}${MOVIE_URL}${id}?api_key=${API_KEY}`)
-        .then(response => response.json())
-        .then(data => dispatch({ type: FILMS_TYPES.SET_SELECTED_FILM, payload: data }))
-        .then(() => {
-            dispatch(toggleErrorAC())
-        })
-        .catch(e => {
-            dispatch(toggleErrorAC(e.message))
-        })
+export const loadFilmAC = (id) => async (dispatch) => {
+    try {
+        const response = await fetch(`${BASE_URL}${MOVIE_URL}${id}?api_key=${API_KEY}`)
+        const data = await response.json()
+        dispatch({ type: FILMS_TYPES.SET_SELECTED_FILM, payload: data })
+        dispatch(toggleErrorAC())
+    } catch(e) {
+        dispatch(toggleErrorAC(e.message))
+    }
 }
-
-// export const loadFilmAC = (id) => async (dispatch) => {
-//     try {
-//         dispatch(toggleErrorAC());
-//         const responce = await fetch(`${BASE_URL}${MOVIE_URL}${id}?api_key=${API_KEY}`)
-//         const data = await responce.json()
-//         dispatch({ type: FILMS_TYPES.SET_SELECTED_FILM, payload: data }))
-//         dispatch(toggleErrorAC())
-//     } catch (e) {
-//         dispatch(toggleErrorAC(e.message))
-//     }
-// }
 
 export const setFilmsByName = (name, page) => (dispatch) => {
     loadFilms(SEARCH_URL, page, `&query=${name}`, dispatch);
@@ -84,13 +70,15 @@ export const setFilms = (page, sort, genreIds, score) => (dispatch) => {
     );
 }
 
-export const setGenres = () => (dispatch) => {
-    fetch(`${BASE_URL}${GENRES_URL}api_key=${API_KEY}`)
-        .then(response => response.json())
-        .then(data => dispatch({ type: FILMS_TYPES.SET_GENRES, payload: data.genres }))
-        .catch(e => {
-            console.log(e)
-        })
+export const setGenres = () => async (dispatch) => {
+    try {
+        const response = await fetch(`${BASE_URL}${GENRES_URL}api_key=${API_KEY}`)
+        const data = await response.json()
+        dispatch({ type: FILMS_TYPES.SET_GENRES, payload: data.genres })
+        dispatch(toggleErrorAC())
+    } catch(e) {
+        dispatch(toggleErrorAC(e.message))
+    }
 }
 
 export const setFiltersAC = (genres, userScore, sort) => {

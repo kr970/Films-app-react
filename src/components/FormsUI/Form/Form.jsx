@@ -67,7 +67,7 @@ const CustomForm = () => {
                     <Box sx={{ ...styles.box, borderColor: borderColor }}>
                         <AccountCircleIcon sx={styles.icon}></AccountCircleIcon>
                         <Typography variant="h5" sx={styles.title}>
-                            {showSignUp ? 'Sing up' : 'Sing in'}
+                            {showSignUp ? 'Sign up' : 'Sign in'}
                         </Typography>
                         <TextfieldWrapper name="userName" label="User Name" />
                         <TextfieldWrapper name="password" label="Password" type="password" />
