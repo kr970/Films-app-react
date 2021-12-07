@@ -38,17 +38,10 @@ const FilmsPage = () => {
             dispatch(setSearchAC(searchQuery));
             return;
         }
-        setSearchQuery(e.target.value);
-        if (!e.target.value) {
-            dispatch(setFilms(pagination.page, sort, genres, userScore))
-        }
     }
 
     const onChange = value => {
         setSearchQuery(value);
-        if (!value) {
-            dispatch(setFilms(pagination.page, sort, genres, userScore))
-        }
     }
 
     const focusOnSearch = () => {
