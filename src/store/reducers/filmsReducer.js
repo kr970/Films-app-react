@@ -77,6 +77,13 @@ export default function filmsReducer(state = initialState, action) {
             };
         case 'LOGOUT':
             return initialState;
+        case 'RESET_FILTERS':
+            return {
+                ...state,
+                filters: {
+                    ...initialState.filters
+                }
+            }
         default:
             return state;
     }

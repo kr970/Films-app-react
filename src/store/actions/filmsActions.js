@@ -70,6 +70,12 @@ export const setFilms = (page, sort, genreIds, score) => (dispatch) => {
     );
 }
 
+export const resetFilters = () => {
+    return {
+        type: FILMS_TYPES.RESET_FILTERS
+    }
+}
+
 export const setGenres = () => async (dispatch) => {
     try {
         const response = await fetch(`${BASE_URL}${GENRES_URL}api_key=${API_KEY}`)

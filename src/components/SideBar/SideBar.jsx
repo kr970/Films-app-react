@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import RangeSlider from '../SideBar/RangeSlider';
 import Genres from '../SideBar/Genres';
 import Sorting from '../SideBar/Sorting';
-import { setFilms, setFiltersAC } from '../../store/actions/filmsActions';
+import { setFilms, setFiltersAC, resetFilters } from '../../store/actions/filmsActions';
 import { filtersSelector } from './selector';
 import { MIN_USER_SCORE, MAX_USER_SCORE } from '../../ constants/constants';
 
@@ -42,6 +42,7 @@ const SideBar = () => {
         setSelectedGenres([]);
         setScore([MIN_USER_SCORE, MAX_USER_SCORE]);
         setSelectedSort('');
+        dispatch(resetFilters());
         dispatch(setFilms(1, '', [], []))
     }
     return (
