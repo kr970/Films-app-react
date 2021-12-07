@@ -50,6 +50,9 @@ export default function filmsReducer(state = initialState, action) {
                     genres: action.payload.genres,
                     userScore: action.payload.userScore,
                     sort: action.payload.sort
+                },
+                pagination: {
+                    ...initialState.pagination
                 }
             }
         case 'CHANGE_PAGE':
@@ -82,6 +85,10 @@ export default function filmsReducer(state = initialState, action) {
                 ...state,
                 filters: {
                     ...initialState.filters
+                },
+                pagination: {
+                    ...state.pagination,
+                    page: action.payload
                 }
             }
         default:

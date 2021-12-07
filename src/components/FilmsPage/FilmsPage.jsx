@@ -22,7 +22,7 @@ const FilmsPage = () => {
     const [searchQuery, setSearchQuery] = useState(searchValue);
     const [isSearching, setIsSearching] = useState(false);
 
-    const hidePagination = films.length < FILMSPERPAGE;
+    const hidePagination = pagination.total_results < FILMSPERPAGE;
 
     useEffect(() => {
         if (searchValue) {
