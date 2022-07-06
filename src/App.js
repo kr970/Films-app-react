@@ -6,13 +6,14 @@ import Form from './components/FormsUI/Form/Form';
 import Header from './components/Header/Header';
 import { Provider } from 'react-redux'
 import store from './store/store.js';
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { HashRouter, Routes, Route, Navigate } from "react-router-dom";
 import FavouritesPage from './components/FavouritesPage/FavouritesPage';
 
 import { PrivateRoute } from './routing/PrivateRoute';
 import Spinner from './components/Spinner/Spinner';
 import Error from './components/Error/Error';
 import Notification from './components/Notification/Notification';
+import Page404 from './components/Page404/Page404';
 
 function App() {
 	return (
@@ -20,7 +21,7 @@ function App() {
 			<Spinner />
 			<Error />
 			<Notification />
-			<BrowserRouter>
+			<HashRouter>
 				<Routes>
 					<Route path="/" element={<Navigate to="/films" />} />
 						<Route
@@ -51,8 +52,9 @@ function App() {
 							}
 						/>
 					<Route path="/login" element={<Form />} />
+					<Route path="*" element={<Page404/>} />
 				</Routes>
-			</BrowserRouter>
+			</HashRouter>
 		</Provider>
 	);
 }

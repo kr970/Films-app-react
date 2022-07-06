@@ -1,9 +1,9 @@
 const initialState = {
-    films: [],
+    films: null,
     pagination: {
         page: 1,
-        totalPages: 0,
-        totalResults: 0
+        total_pages: 0,
+        total_results: 0
     },
     filterOption: {
         genres: []

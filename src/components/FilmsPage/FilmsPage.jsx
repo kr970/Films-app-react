@@ -64,7 +64,7 @@ const FilmsPage = () => {
                 favourites={favourites}
             />)
         )
-    }
+    } 
 
     return (
         <Box sx={{ display: 'flex' }}>
@@ -81,10 +81,12 @@ const FilmsPage = () => {
                         value={searchValue}
                     />
                 </Box>
-                {!films.length ? <NotFound /> :
+                {films && !films.length ? <NotFound /> : null}
+                {films && films.length ?
                     <Box sx={{ ...styles.cardContainer, ...styles.flexContainer }}>
                         {spawnFilmsCard()}
-                    </Box>}
+                    </Box> : null
+                }
                 {hidePagination ? null :
                     <Box sx={styles.flexContainer}>
                         <Pagination
